@@ -9,12 +9,14 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
 public class KoseiTeleOp extends LinearOpMode {
-    Servo leftServo, rightServo;
+    Servo leftServo, verticalServo;
 
     // POSITION = 0: pickup position, 1: up position
     public void setServo(double position) {
         leftServo.setPosition(position);
-        rightServo.setPosition(1 - position);
+    }
+    public void setServoV (double positionV) {
+        verticalServo.setPosition(positionV);
     }
 
     @Override
@@ -26,7 +28,7 @@ public class KoseiTeleOp extends LinearOpMode {
         DcMotor hSlide = hardwareMap.dcMotor.get("hSlide");
         CRServo intakeServo = hardwareMap.get(CRServo.class, "intake");
         leftServo = hardwareMap.get(Servo.class, "leftServo");
-        rightServo = hardwareMap.get(Servo.class, "rightServo");
+        int hSlideLimit = 5000;
 
 
         // Reverse the right side motors. This may be wrong for your setup.
@@ -84,6 +86,9 @@ public class KoseiTeleOp extends LinearOpMode {
 //                leftServo.setPosition(1);
 //                rightServo.setPosition(0);
                 setServo(1);
+            }
+            if (gamepad2.left_bumper) {
+                // vertical slide rotation I have no idea how it will be
             }
         }
     }

@@ -28,7 +28,6 @@ public class KoseiTeleOp extends LinearOpMode {
         DcMotor hSlide = hardwareMap.dcMotor.get("hSlide");
         CRServo intakeServo = hardwareMap.get(CRServo.class, "intake");
         leftServo = hardwareMap.get(Servo.class, "leftServo");
-        int hSlideLimit = 5000;
 
 
         // Reverse the right side motors. This may be wrong for your setup.
@@ -43,7 +42,7 @@ public class KoseiTeleOp extends LinearOpMode {
         while (opModeIsActive()) {
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = -gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
-            double rx = gamepad1.right_trigger - gamepad1.left_trigger;
+            double rx = gamepad1.right_stick_x;
 
             // Denominator is the largest motor power (absolute value) or 1
             // This ensures all the powers maintain the same ratio,

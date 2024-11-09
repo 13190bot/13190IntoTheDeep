@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.KoseiLastResort;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -8,19 +8,25 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
-public class MainTeleOp extends LinearOpMode {
+public class KoseiTeleOp extends LinearOpMode {
+    Servo leftServo, rightServo;
+
+    // POSITION =
+    public void setServo(double position) {
+        leftServo.setPosition(position);
+        rightServo.setPosition(1 - position);
+    }
+
     @Override
     public void runOpMode() throws InterruptedException {
-        // Declare our motors
-        // Make sure your ID's match your configuration
         DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeft");
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeft");
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRight");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
         DcMotor hSlide = hardwareMap.dcMotor.get("hSlide");
         CRServo intakeServo = hardwareMap.get(CRServo.class, "intake");
-        Servo leftServo = hardwareMap.get(Servo.class, "leftServo");
-        Servo rightServo = hardwareMap.get(Servo.class, "rightServo");
+        leftServo = hardwareMap.get(Servo.class, "leftServo");
+        rightServo = hardwareMap.get(Servo.class, "rightServo");
 
 
         // Reverse the right side motors. This may be wrong for your setup.
@@ -32,14 +38,10 @@ public class MainTeleOp extends LinearOpMode {
 
         waitForStart();
 
-        if (isStopRequested()) return;
-
         while (opModeIsActive()) {
-
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = -gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
-            double rx = gamepad1.right_stick_x;
-
+            double rx = gamepad1.right_trigger - gamepad1.left_trigger;
 
             // Denominator is the largest motor power (absolute value) or 1
             // This ensures all the powers maintain the same ratio,
@@ -57,15 +59,7 @@ public class MainTeleOp extends LinearOpMode {
             backRightMotor.setPower(backRightPower);
 
             // Boolean stuff(horizontal slide)
-            if (gamepad2.a) {
-                hSlide.setPower(0.5);
-            }
-            else if (gamepad2.b) {
-                hSlide.setPower(-0.5);
-            }
-            else {
-                hSlide.setPower(0);
-            }
+            hSlide.setPower(-gamepad2.right_stick_y / 2.0);
 
             // intake code
             if (gamepad2.triangle) {
@@ -76,6 +70,20 @@ public class MainTeleOp extends LinearOpMode {
             }
             else {
                 intakeServo.setPower(0);
+            }
+
+
+            if (gamepad2.circle) {
+                // go to pickup position
+//                leftServo.setPosition(0);
+//                rightServo.setPosition(1);
+                setServo(0);
+            }
+            if (gamepad2.cross) {
+                // go to up position
+//                leftServo.setPosition(1);
+//                rightServo.setPosition(0);
+                setServo(1);
             }
         }
     }

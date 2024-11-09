@@ -27,6 +27,7 @@ public class KoseiTeleOp extends LinearOpMode {
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
         DcMotor hSlide = hardwareMap.dcMotor.get("hSlide");
         CRServo intakeServo = hardwareMap.get(CRServo.class, "intake");
+        DcMotor verticalSlide = hardwareMap.dcMotor.get("Vslide");
         leftServo = hardwareMap.get(Servo.class, "leftServo");
 
 
@@ -87,7 +88,21 @@ public class KoseiTeleOp extends LinearOpMode {
                 setServo(1);
             }
             if (gamepad2.left_bumper) {
-                // vertical slide rotation I have no idea how it will be
+                // vertical slide up
+                verticalSlide.setPower(5);
+            }
+            else if (gamepad2.right_bumper) {
+                // vertical slide down
+                verticalSlide.setPower(-5);
+            }
+            else {
+                verticalSlide.setPower(0.05);
+            }
+            if (gamepad2.left_stick_button) {
+                setServoV(1);
+            }
+            if (gamepad2.right_stick_button) {
+                setServoV(0);
             }
         }
     }

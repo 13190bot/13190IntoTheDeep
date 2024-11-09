@@ -9,13 +9,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
 public class KoseiTeleOp extends LinearOpMode {
-//    Servo leftServo, rightServo;
+    Servo leftServo, rightServo;
 
     // POSITION = 0: pickup position, 1: up position
-//    public void setServo(double position) {
-//        leftServo.setPosition(position);
-//        rightServo.setPosition(1 - position);
-//    }
+    public void setServo(double position) {
+        leftServo.setPosition(position);
+        rightServo.setPosition(1 - position);
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -25,8 +25,8 @@ public class KoseiTeleOp extends LinearOpMode {
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
         DcMotor hSlide = hardwareMap.dcMotor.get("hSlide");
         CRServo intakeServo = hardwareMap.get(CRServo.class, "intake");
-        Servo leftServo = hardwareMap.get(Servo.class, "leftServo");
-        Servo rightServo = hardwareMap.get(Servo.class, "rightServo");
+        leftServo = hardwareMap.get(Servo.class, "leftServo");
+        rightServo = hardwareMap.get(Servo.class, "rightServo");
 
 
         // Reverse the right side motors. This may be wrong for your setup.
@@ -75,15 +75,15 @@ public class KoseiTeleOp extends LinearOpMode {
 
             if (gamepad2.circle) {
                 // go to pickup position
-                leftServo.setPosition(0);
-                rightServo.setPosition(1);
-//                setServo(0);
+//                leftServo.setPosition(0);
+//                rightServo.setPosition(1);
+                setServo(0);
             }
             if (gamepad2.cross) {
                 // go to up position
-                leftServo.setPosition(1);
-                rightServo.setPosition(0);
-//                setServo(1);
+//                leftServo.setPosition(1);
+//                rightServo.setPosition(0);
+                setServo(1);
             }
         }
     }

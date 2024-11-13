@@ -30,6 +30,13 @@ public class KoseiTeleOp extends LinearOpMode {
         DcMotor verticalSlide = hardwareMap.dcMotor.get("Vslide");
         leftServo = hardwareMap.get(Servo.class, "leftServo");
 
+        // hSlide limit(setting)
+        int minPosition = 0; // Minimum position (fully retracted)
+        int maxPosition = 1500; // Maximum position (fully extended)
+        int currentPosition;
+        hSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
@@ -60,15 +67,24 @@ public class KoseiTeleOp extends LinearOpMode {
             frontRightMotor.setPower(frontRightPower);
             backRightMotor.setPower(backRightPower);
 
-            // Boolean stuff(horizontal slide)
-            hSlide.setPower(-gamepad2.right_stick_y / 2.0);
+            //Movement hSlide
+            currentPosition = hSlide.getCurrentPosition();
+
+            if currentPosition <= minPosition {
+                hSlide.setPower(0);
+            } else if currentPosition >= maxPosition {
+                hSlide.setPower(0);
+            } else {
+                // Boolean stuff(horizontal slide)
+                hSlide.setPower(-gamepad2.right_stick_y / 2.0);
+            }
 
             // intake code
             if (gamepad2.triangle) {
-                intakeServo.setPower(0.5);
+                intakeServo.setPower(1);
             }
             else if (gamepad2.square) {
-                intakeServo.setPower(-0.5);
+                intakeServo.setPower(-1);
             }
             else {
                 intakeServo.setPower(0);

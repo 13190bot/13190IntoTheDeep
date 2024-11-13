@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @Autonomous
-public class KoseiAuto extends LinearOpMode {
+public class KoseiParkingAuto extends LinearOpMode {
     DcMotor frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor;
 
     public void set(double frontLeftPower, double backLeftPower, double frontRightPower, double backRightPower) {

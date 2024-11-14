@@ -6,7 +6,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous
 public class HighBasAuto extends LinearOpMode {
-    DcMotor frontLeftMotor, frontRightMotor, backLeftmotor, backRightMotor;
+    DcMotor frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor;
+
+    public void set(double frontLeftMotor, double frontRightMotor, double backLeftMotor, double backRightMotor) {
+
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {

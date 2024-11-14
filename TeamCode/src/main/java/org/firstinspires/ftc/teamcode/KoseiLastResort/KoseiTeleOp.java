@@ -70,9 +70,9 @@ public class KoseiTeleOp extends LinearOpMode {
             //Movement hSlide
             currentPosition = hSlide.getCurrentPosition();
 
-            if currentPosition <= minPosition {
+            if (currentPosition <= minPosition) {
                 hSlide.setPower(0);
-            } else if currentPosition >= maxPosition {
+            } else if (currentPosition >= maxPosition) {
                 hSlide.setPower(0);
             } else {
                 // Boolean stuff(horizontal slide)

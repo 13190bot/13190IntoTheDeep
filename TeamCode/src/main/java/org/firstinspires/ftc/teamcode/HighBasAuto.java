@@ -8,12 +8,19 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class HighBasAuto extends LinearOpMode {
     DcMotor frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor;
 
-    public void set(double frontLeftMotor, double frontRightMotor, double backLeftMotor, double backRightMotor) {
-
+    public void set(double frontLeftPower, double frontRightPower, double backLeftPower, double backRightPower) {
+        frontLeftMotor.setPower(frontLeftPower);
+        backLeftMotor.setPower(backLeftPower);
+        frontRightMotor.setPower(frontRightPower);
+        backRightMotor.setPower(backRightPower);
     }
 
     @Override
     public void runOpMode() throws InterruptedException {
+        frontLeftMotor = hardwareMap.dcMotor.get("frontLeft");
+        backLeftMotor = hardwareMap.dcMotor.get("backLeft");
+        frontRightMotor = hardwareMap.dcMotor.get("frontRight");
+        backRightMotor = hardwareMap.dcMotor.get("backRight");
 
 
     }

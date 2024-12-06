@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
 public class KoseiTeleOp extends LinearOpMode {
-    Servo leftServo, verticalServo;
+    /*Servo leftServo, verticalServo;
 
     // POSITION = 0: pickup position, 1: up position
     public void setServo(double position) {
@@ -18,25 +18,25 @@ public class KoseiTeleOp extends LinearOpMode {
     public void setServoV (double positionV) {
         verticalServo.setPosition(positionV);
     }
-
+*/
     @Override
     public void runOpMode() throws InterruptedException {
         DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeft");
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeft");
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRight");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
-        DcMotor hSlide = hardwareMap.dcMotor.get("hSlide");
-        CRServo intakeServo = hardwareMap.get(CRServo.class, "intake");
-        DcMotor verticalSlide = hardwareMap.dcMotor.get("Vslide");
-        leftServo = hardwareMap.get(Servo.class, "leftServo");
-
+        //DcMotor hSlide = hardwareMap.dcMotor.get("hSlide");
+        //CRServo intakeServo = hardwareMap.get(CRServo.class, "intake");
+        //DcMotor verticalSlide = hardwareMap.dcMotor.get("Vslide");
+        //leftServo = hardwareMap.get(Servo.class, "leftServo");
+        /*
         // hSlide limit(setting)
         int minPosition = 0; // Minimum position (fully retracted)
         int maxPosition = 1500; // Maximum position (fully extended)
         int currentPosition;
         hSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
+        */
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
@@ -67,6 +67,7 @@ public class KoseiTeleOp extends LinearOpMode {
             frontRightMotor.setPower(frontRightPower);
             backRightMotor.setPower(backRightPower);
 
+            /*
             //Movement hSlide
             currentPosition = hSlide.getCurrentPosition();
 
@@ -120,6 +121,8 @@ public class KoseiTeleOp extends LinearOpMode {
             if (gamepad2.right_stick_button) {
                 setServoV(0);
             }
+
+             */
         }
     }
 }

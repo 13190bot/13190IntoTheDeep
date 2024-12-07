@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @Autonomous
 public class HighBasAuto extends LinearOpMode {
-    DcMotor frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor;
+    DcMotor frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor, vSlideMotor;
 
     public void set(double frontLeftPower, double frontRightPower, double backLeftPower, double backRightPower) {
         frontLeftMotor.setPower(frontLeftPower);
@@ -22,6 +22,7 @@ public class HighBasAuto extends LinearOpMode {
         backLeftMotor = hardwareMap.dcMotor.get("backLeft");
         frontRightMotor = hardwareMap.dcMotor.get("frontRight");
         backRightMotor = hardwareMap.dcMotor.get("backRight");
+        vSlideMotor = hardwareMap.dcMotor.get("vSlide");
 
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -40,5 +41,7 @@ public class HighBasAuto extends LinearOpMode {
         sleep(ms);
 
         set(0, 0, 0, 0);
+
+
     }
 }

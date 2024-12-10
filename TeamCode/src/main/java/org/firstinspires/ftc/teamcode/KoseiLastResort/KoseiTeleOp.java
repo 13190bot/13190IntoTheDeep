@@ -9,34 +9,38 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
 public class KoseiTeleOp extends LinearOpMode {
-    /*Servo leftServo, verticalServo;
+    Servo leftIntakeServo, rightIntakeServo, verticalServo;
 
     // POSITION = 0: pickup position, 1: up position
     public void setServo(double position) {
-        leftServo.setPosition(position);
+        leftIntakeServo.setPosition(position);
+        rightIntakeServo.setPosition(position);
     }
     public void setServoV (double positionV) {
         verticalServo.setPosition(positionV);
     }
-*/
+
     @Override
     public void runOpMode() throws InterruptedException {
         DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeft");
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeft");
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRight");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
-        //DcMotor hSlide = hardwareMap.dcMotor.get("hSlide");
-        //CRServo intakeServo = hardwareMap.get(CRServo.class, "intake");
-        //DcMotor verticalSlide = hardwareMap.dcMotor.get("Vslide");
-        //leftServo = hardwareMap.get(Servo.class, "leftServo");
-        /*
+        DcMotor hSlide = hardwareMap.dcMotor.get("hSlide");
+        CRServo intakeServo = hardwareMap.get(CRServo.class, "intake");
+        DcMotor rightVerticalSlide = hardwareMap.dcMotor.get("RVslide");
+        DcMotor leftVerticalSlide = hardwareMap.dcMotor.get("LVslide");
+        leftIntakeServo = hardwareMap.get(Servo.class, "leftIntakeServo");
+        rightIntakeServo = hardwareMap.get(Servo.class,"rightIntakeServo");
+
+
         // hSlide limit(setting)
         int minPosition = 0; // Minimum position (fully retracted)
         int maxPosition = 1500; // Maximum position (fully extended)
         int currentPosition;
         hSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        */
+
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
@@ -67,7 +71,7 @@ public class KoseiTeleOp extends LinearOpMode {
             frontRightMotor.setPower(frontRightPower);
             backRightMotor.setPower(backRightPower);
 
-            /*
+
             //Movement hSlide
             currentPosition = hSlide.getCurrentPosition();
 
@@ -94,35 +98,36 @@ public class KoseiTeleOp extends LinearOpMode {
 
             if (gamepad2.circle) {
                 // go to pickup position
-//                leftServo.setPosition(0);
-//                rightServo.setPosition(1);
+                leftIntakeServo.setPosition(0);
+                rightIntakeServo.setPosition(1);
                 setServo(0);
             }
             if (gamepad2.cross) {
                 // go to up position
-//                leftServo.setPosition(1);
-//                rightServo.setPosition(0);
+                leftIntakeServo.setPosition(1);
+                rightIntakeServo.setPosition(0);
                 setServo(1);
             }
             if (gamepad2.left_bumper) {
                 // vertical slide up
-                verticalSlide.setPower(5);
+                rightVerticalSlide.setPower(5);
             }
             else if (gamepad2.right_bumper) {
                 // vertical slide down
-                verticalSlide.setPower(-5);
+                rightVerticalSlide.setPower(-5);
+                leftVerticalSlide.setPower(-5);
             }
             else {
-                verticalSlide.setPower(0.05);
+                rightVerticalSlide.setPower(0.05);
+                leftVerticalSlide.setPower(0.05);
             }
             if (gamepad2.left_stick_button) {
                 setServoV(1);
             }
-            if (gamepad2.right_stick_button) {
+            else if (gamepad2.right_stick_button) {
                 setServoV(0);
             }
 
-             */
         }
     }
 }

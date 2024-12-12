@@ -9,16 +9,18 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
 public class KoseiTeleOp extends LinearOpMode {
-    Servo leftIntakeServo, rightIntakeServo, verticalServo;
+    Servo leftIntakeServo, rightIntakeServo;//, verticalServo;
 
     // POSITION = 0: pickup position, 1: up position
     public void setServo(double position) {
         leftIntakeServo.setPosition(position);
         rightIntakeServo.setPosition(position);
     }
-    public void setServoV (double positionV) {
+    /*public void setServoV (double positionV) {
         verticalServo.setPosition(positionV);
     }
+
+     */
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -26,21 +28,21 @@ public class KoseiTeleOp extends LinearOpMode {
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeft");
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRight");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
-        DcMotor hSlide = hardwareMap.dcMotor.get("hSlide");
-        CRServo intakeServo = hardwareMap.get(CRServo.class, "intake");
-        DcMotor rightVerticalSlide = hardwareMap.dcMotor.get("RVslide");
-        DcMotor leftVerticalSlide = hardwareMap.dcMotor.get("LVslide");
+        //DcMotor hSlide = hardwareMap.dcMotor.get("hSlide");
+        //CRServo intakeServo = hardwareMap.get(CRServo.class, "intake");
+        //DcMotor rightVerticalSlide = hardwareMap.dcMotor.get("RVslide");
+        //DcMotor leftVerticalSlide = hardwareMap.dcMotor.get("LVslide");
         leftIntakeServo = hardwareMap.get(Servo.class, "leftIntakeServo");
         rightIntakeServo = hardwareMap.get(Servo.class,"rightIntakeServo");
 
 
         // hSlide limit(setting)
-        int minPosition = 0; // Minimum position (fully retracted)
+        /*int minPosition = 0; // Minimum position (fully retracted)
         int maxPosition = 1500; // Maximum position (fully extended)
         int currentPosition;
         hSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
+        */
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
@@ -73,7 +75,7 @@ public class KoseiTeleOp extends LinearOpMode {
 
 
             //Movement hSlide
-            currentPosition = hSlide.getCurrentPosition();
+            /*currentPosition = hSlide.getCurrentPosition();
 
             if (currentPosition <= minPosition) {
                 hSlide.setPower(0);
@@ -83,9 +85,10 @@ public class KoseiTeleOp extends LinearOpMode {
                 // Boolean stuff(horizontal slide)
                 hSlide.setPower(-gamepad2.right_stick_y / 2.0);
             }
+            */
 
             // intake code
-            if (gamepad2.triangle) {
+            /*if (gamepad2.triangle) {
                 intakeServo.setPower(1);
             }
             else if (gamepad2.square) {
@@ -95,19 +98,26 @@ public class KoseiTeleOp extends LinearOpMode {
                 intakeServo.setPower(0);
             }
 
+             */
+
 
             if (gamepad2.circle) {
                 // go to pickup position
-                leftIntakeServo.setPosition(0);
+                /*leftIntakeServo.setPosition(0);
                 rightIntakeServo.setPosition(1);
+
+                 */
                 setServo(0);
             }
             if (gamepad2.cross) {
                 // go to up position
-                leftIntakeServo.setPosition(1);
+                /*leftIntakeServo.setPosition(1);
                 rightIntakeServo.setPosition(0);
+
+                 */
                 setServo(1);
             }
+            /*
             if (gamepad2.left_bumper) {
                 // vertical slide up
                 rightVerticalSlide.setPower(5);
@@ -121,12 +131,16 @@ public class KoseiTeleOp extends LinearOpMode {
                 rightVerticalSlide.setPower(0.05);
                 leftVerticalSlide.setPower(0.05);
             }
-            if (gamepad2.left_stick_button) {
+            */
+            /*if (gamepad2.left_stick_button) {
                 setServoV(1);
             }
             else if (gamepad2.right_stick_button) {
                 setServoV(0);
             }
+
+             */
+
 
         }
     }

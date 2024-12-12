@@ -11,7 +11,6 @@ public class SingleMotorTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         DcMotor intake = hardwareMap.dcMotor.get("intake");
 
-
         waitForStart();
 
         while (opModeIsActive()) {

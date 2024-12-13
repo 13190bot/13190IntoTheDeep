@@ -109,6 +109,7 @@ public class KoseiTeleOp extends LinearOpMode {
                 /*leftIntakeServo.setPosition(0);
                 rightIntakeServo.setPosition(1);
 
+
                  */
                 setServo(0,1);
             }

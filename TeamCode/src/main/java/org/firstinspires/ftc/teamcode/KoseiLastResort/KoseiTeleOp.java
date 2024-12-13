@@ -12,15 +12,18 @@ public class KoseiTeleOp extends LinearOpMode {
     Servo leftIntakeServo, rightIntakeServo;//, verticalServo;
 
     // POSITION = 0: pickup position, 1: up position
-    public void setServo(double position) {
-        leftIntakeServo.setPosition(position);
-        rightIntakeServo.setPosition(position);
+    public void setServo(double positionL, double positionR) {
+        leftIntakeServo.setPosition(positionL);
+        rightIntakeServo.setPosition(positionR);
     }
-    /*public void setServoV (double positionV) {
-        verticalServo.setPosition(positionV);
+    /*public void setVServo (double positionVS) {
+        verticalServo.setPosition(positionVS);
     }
-
+    public void setV (double positionV) {
+        leftVerticalSlide.setPower(postionV);
+        rightVerticalSlide.setPower(postionV);
      */
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -107,7 +110,7 @@ public class KoseiTeleOp extends LinearOpMode {
                 rightIntakeServo.setPosition(1);
 
                  */
-                setServo(0);
+                setServo(0,1);
             }
             if (gamepad2.cross) {
                 // go to up position
@@ -115,7 +118,7 @@ public class KoseiTeleOp extends LinearOpMode {
                 rightIntakeServo.setPosition(0);
 
                  */
-                setServo(1);
+                setServo(1,0);
             }
             /*
             if (gamepad2.left_bumper) {

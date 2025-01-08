@@ -10,19 +10,21 @@ import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp
 public class KoseiTeleOp extends LinearOpMode {
 //    Servo leftIntakeServo, rightIntakeServo, clawServo, arm;
-//    DcMotor leftVerticalSlide, rightVerticalSlide;
+    Servo LeftVerticalArm, RightVerticalArm, leftIntakeServo, rightIntakeServo;
+    DcMotor leftVerticalSlide, rightVerticalSlide;
 
     // POSITION = 0: pickup position, 1: up position
-//    public void setServo(double positionL, double positionR) {
-//        leftIntakeServo.setPosition(positionL);
-//        rightIntakeServo.setPosition(positionR);
-//    }
+    public void setIntake(double positionL, double positionR) {
+        leftIntakeServo.setPosition(positionL);
+        rightIntakeServo.setPosition(positionR);
+    }
 //    public void setVServo (double positionVS) {
 //        clawServo.setPosition(positionVS);
 //    }
-//    public void setAxon (double armPosition) {
-//        arm.setPosition(armPosition);
-//    }
+    public void setArm (double RarmPosition, double LarmPosition) {
+        LeftVerticalArm.setPosition(RarmPosition);
+        RightVerticalArm.setPosition(LarmPosition);
+    }
 //    /*public void setV (double positionV) {
 //        leftVerticalSlide.setPower(positionV);
 //        rightVerticalSlide.setPower(positionV);
@@ -39,21 +41,26 @@ public class KoseiTeleOp extends LinearOpMode {
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRight");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
         DcMotor hSlide = hardwareMap.dcMotor.get("hSlide");
-//        CRServo intakeServo = hardwareMap.get(CRServo.class, "intake");
-//        DcMotor leftVerticalSlide = hardwareMap.dcMotor.get("LVslide");
-//        DcMotor rightVerticalSlide = hardwareMap.dcMotor.get("RVslide");
-//        leftIntakeServo = hardwareMap.get(Servo.class, "leftIntakeServo");
-//        rightIntakeServo = hardwareMap.get(Servo.class,"rightIntakeServo");
+        CRServo intakeServo = hardwareMap.get(CRServo.class, "intake");
+        DcMotor leftVerticalSlide = hardwareMap.dcMotor.get("LVslide");
+        DcMotor rightVerticalSlide = hardwareMap.dcMotor.get("RVslide");
+        leftIntakeServo = hardwareMap.get(Servo.class, "leftIntakeServo");
+        rightIntakeServo = hardwareMap.get(Servo.class,"rightIntakeServo");
 //        clawServo = hardwareMap.get(Servo.class,"claw");
-//        arm = hardwareMap.get(Servo.class, "arm");
+        LeftVerticalArm = hardwareMap.get(Servo.class, "Larm");
+        RightVerticalArm = hardwareMap.get(Servo.class, "Rarm");
 
 
         // hSlide limit(setting)
+        telemetry.addData("RVslideIncoder", rightVerticalSlide.getCurrentPosition());
+
         int minPosition = 0; // Minimum position (fully retracted)
         int maxPosition = 1500; // Maximum position (fully extended)
         int currentPosition;
         hSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        telemetry.update();
 
 
 
@@ -92,74 +99,84 @@ public class KoseiTeleOp extends LinearOpMode {
 
 
             //Movement hSlide
-//            currentPosition = hSlide.getCurrentPosition();
-//
-//            if (currentPosition <= minPosition) {
-//                hSlide.setPower(0);
-//            } else if (currentPosition >= maxPosition) {
-//                hSlide.setPower(0);
-//            } else {
-//                // Boolean stuff(horizontal slide)
-//                hSlide.setPower(-gamepad2.right_stick_y / 2.0);
-//            }
-            if(gamepad2.circle) {
-                hSlide.setPower(0.5);
+            currentPosition = hSlide.getCurrentPosition();
+
+            if (currentPosition <= minPosition) {
+                hSlide.setPower(0);
+            } else if (currentPosition >= maxPosition) {
+                hSlide.setPower(0);
+            } else {
+                // Boolean stuff(horizontal slide)
+                hSlide.setPower(-gamepad2.right_stick_y / 2.0);
             }
-            if(gamepad2.cross) {
-                hSlide.setPower(-0.5);
+//            if (gamepad2.circle) {
+//                hSlide.setPower(0.5);
+//            } else if (gamepad2.cross) {
+//                hSlide.setPower(-0.5);
+//            } else {
+//                hSlide.setPower(0);
+//            }
+//
+//
+//
+            // intake code
+            if (gamepad2.triangle) {
+                intakeServo.setPower(1);
+            } else if (gamepad2.square) {
+                intakeServo.setPower(-1);
+            } else {
+                intakeServo.setPower(0);
+            }
+
+
+
+            if (gamepad2.circle) {
+                // go to pickup position
+                /*leftIntakeServo.setPosition(0);
+                rightIntakeServo.setPosition(1);
+
+
+                 */
+                setIntake(0.4,0.4);
+            }
+            if (gamepad2.cross) {
+                // go to up position
+                /*leftIntakeServo.setPosition(1);
+                rightIntakeServo.setPosition(0);
+0
+                 */
+                setIntake(0.8,0);
+                //setServo(0.55,0);
+            }
+
+
+            //Movement hSlide
+            currentPosition = rightVerticalSlide.getCurrentPosition();
+
+            if (currentPosition <= minPosition) {
+                leftVerticalSlide.setPower(0);
+                rightVerticalSlide.setPower(0);
+            } else if (currentPosition >= maxPosition) {
+                leftVerticalSlide.setPower(0);
+                rightVerticalSlide.setPower(0);
+            }
+
+            if (gamepad1.left_bumper) {
+                // vertical slide up
+                leftVerticalSlide.setPower(0.5);
+                rightVerticalSlide.setPower(-0.5);
+            }
+            else if (gamepad1.right_bumper ) {
+                // vertical slide down
+                leftVerticalSlide.setPower(-0.5);
+                rightVerticalSlide.setPower(0.5);
             }
             else {
-                hSlide.setPower(0);
+                leftVerticalSlide.setPower(-0.02);
+                rightVerticalSlide.setPower(0.02);
             }
 
 
-
-            // intake code
-//            if (gamepad2.triangle) {
-//                intakeServo.setPower(1);
-//            }
-//            else if (gamepad2.square) {
-//                intakeServo.setPower(-1);
-//            }
-//            else {
-//                intakeServo.setPower(0);
-//            }
-
-
-
-//            if (gamepad2.circle) {
-//                // go to pickup position
-//                /*leftIntakeServo.setPosition(0);
-//                rightIntakeServo.setPosition(1);
-//
-//
-//                 */
-//                setServo(0,0.23);
-//            }
-//            if (gamepad2.cross) {
-//                // go to up position
-//                /*leftIntakeServo.setPosition(1);
-//                rightIntakeServo.setPosition(0);
-//
-//                 */
-//                setServo(0.8,0);
-//                //setServo(0.55,0);
-//            }
-//
-//
-//
-//            if (gamepad1.left_bumper) {
-//                // vertical slide up
-//                leftVerticalSlide.setPower(0.5);
-//                rightVerticalSlide.setPower(-0.5);
-//            }
-//            else if (gamepad1.right_bumper) {
-//                // vertical slide down
-//                leftVerticalSlide.setPower(-0.5);
-//                rightVerticalSlide.setPower(0.5);
-//            }
-//
-//
 //
 //            if (gamepad2.left_stick_button) {
 //                setVServo(1);
@@ -167,13 +184,15 @@ public class KoseiTeleOp extends LinearOpMode {
 //            else if (gamepad2.right_stick_button) {
 //                setVServo(0);
 //            }
-//            if(gamepad2.left_bumper) {
-//                setAxon(-1);
-//            }
-//            else if (gamepad2.right_bumper) {
-//                setAxon(0);
-//            }
 
+            if(gamepad2.left_bumper) {
+                //down position
+                setArm(1, 0.15);
+            }
+            else if (gamepad2.right_bumper) {
+                //up position
+                setArm(0.1, 1);
+            }
 
         }
     }

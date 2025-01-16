@@ -30,7 +30,7 @@ public class PushingSample extends LinearOpMode {
         waitForStart();
 
 
-        double p = 0.6;
+        double p = 0.45;
         long ms = 1800;
 
         //left
@@ -38,12 +38,13 @@ public class PushingSample extends LinearOpMode {
         sleep(ms);
 
         // forward
-        p = 0.5;
+        p = 0.4;
         ms = (1500);
         set(p, p, p, p);
         sleep(ms);
 
         //rotation
+        p = 0.45;
         ms = (1850);
         set(p, -p, p, -p);
         sleep(ms);
@@ -51,6 +52,12 @@ public class PushingSample extends LinearOpMode {
         //return
         ms = (1400);
         set(p, p, p, p);
+        sleep(ms);
+
+        //back
+        p = 0.4;
+        ms = (1500);
+        set(-p, -p, -p, -p);
         sleep(ms);
 
         set(0, 0, 0, 0);

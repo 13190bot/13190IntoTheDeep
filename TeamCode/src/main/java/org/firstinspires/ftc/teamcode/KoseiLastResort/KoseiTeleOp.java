@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp
 public class KoseiTeleOp extends LinearOpMode {
 //    Servo leftIntakeServo, rightIntakeServo, clawServo, arm;
-    Servo LeftVerticalArm, RightVerticalArm, leftIntakeServo, rightIntakeServo;
+    Servo leftIntakeServo, rightIntakeServo, clawServo, LeftVerticalArm, RightVerticalArm;
     DcMotor leftVerticalSlide, rightVerticalSlide;
 
     // POSITION = 0: pickup position, 1: up position
@@ -18,18 +18,19 @@ public class KoseiTeleOp extends LinearOpMode {
         leftIntakeServo.setPosition(positionL);
         rightIntakeServo.setPosition(positionR);
     }
-//    public void setVServo (double positionVS) {
-//        clawServo.setPosition(positionVS);
-//    }
+    public void clawServo(double positionVS) {
+        clawServo.setPosition(positionVS);
+    }
     public void setArm (double RarmPosition, double LarmPosition) {
-        LeftVerticalArm.setPosition(RarmPosition);
-        RightVerticalArm.setPosition(LarmPosition);
+        LeftVerticalArm.setPosition(LarmPosition);
+        RightVerticalArm.setPosition(RarmPosition);
+
     }
 //    /*public void setV (double positionV) {
 //        leftVerticalSlide.setPower(positionV);
 //        rightVerticalSlide.setPower(positionV);
 //    }
-//
+
 //     */
 
 
@@ -46,7 +47,7 @@ public class KoseiTeleOp extends LinearOpMode {
         DcMotor rightVerticalSlide = hardwareMap.dcMotor.get("RVslide");
         leftIntakeServo = hardwareMap.get(Servo.class, "leftIntakeServo");
         rightIntakeServo = hardwareMap.get(Servo.class,"rightIntakeServo");
-//        clawServo = hardwareMap.get(Servo.class,"claw");
+        clawServo = hardwareMap.get(Servo.class,"claw");
         LeftVerticalArm = hardwareMap.get(Servo.class, "Larm");
         RightVerticalArm = hardwareMap.get(Servo.class, "Rarm");
 
@@ -54,11 +55,11 @@ public class KoseiTeleOp extends LinearOpMode {
         // hSlide limit(setting)
         telemetry.addData("RVslideIncoder", rightVerticalSlide.getCurrentPosition());
 
-        int minPosition = 0; // Minimum position (fully retracted)
+        int minPosition = 100; // Minimum position (fully retracted)
         int maxPosition = 1500; // Maximum position (fully extended)
         int currentPosition;
-        hSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        hSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //hSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       // hSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         telemetry.update();
 
@@ -109,16 +110,14 @@ public class KoseiTeleOp extends LinearOpMode {
                 // Boolean stuff(horizontal slide)
                 hSlide.setPower(-gamepad2.right_stick_y / 2.0);
             }
-//            if (gamepad2.circle) {
+//            if (gamepad1.circle) {
 //                hSlide.setPower(0.5);
-//            } else if (gamepad2.cross) {
+//            } else if (gamepad1.cross) {
 //                hSlide.setPower(-0.5);
 //            } else {
-//                hSlide.setPower(0);
-//            }
-//
-//
-//
+//               hSlide.setPower(0);
+//           }
+
             // intake code
             if (gamepad2.triangle) {
                 intakeServo.setPower(1);
@@ -131,21 +130,21 @@ public class KoseiTeleOp extends LinearOpMode {
 
 
             if (gamepad2.circle) {
-                // go to pickup position
+                // go to up position(1)
                 /*leftIntakeServo.setPosition(0);
                 rightIntakeServo.setPosition(1);
 
 
                  */
-                setIntake(0.4,0.4);
+                setIntake(0,0.5);
             }
             if (gamepad2.cross) {
-                // go to up position
-                /*leftIntakeServo.setPosition(1);
+                // go to pick up position(0)
+                /*leftIntakeServo.setPosition(1);L
                 rightIntakeServo.setPosition(0);
 0
                  */
-                setIntake(0.8,0);
+                setIntake(0.5,0);
                 //setServo(0.55,0);
             }
 
@@ -177,21 +176,33 @@ public class KoseiTeleOp extends LinearOpMode {
             }
 
 
-//
-//            if (gamepad2.left_stick_button) {
-//                setVServo(1);
-//            }
-//            else if (gamepad2.right_stick_button) {
-//                setVServo(0);
-//            }
+            //claw
+            if (gamepad2.left_stick_button) {
+                //claw Open
+                clawServo(0.6);
+            }
+            else if (gamepad2.right_stick_button) {
+                //claw close
+                clawServo(0);
+            }
 
             if(gamepad2.left_bumper) {
-                //down position
-                setArm(1, 0.15);
-            }
-            else if (gamepad2.right_bumper) {
+                //down position (changed to specimen)
+                setArm(0.6, 0.4);
+                long ms = 1000;
+                sleep(ms);
+                setArm(0.89, 0.19);
+                //sleep(ms);
+                //setArm(1, 0);
+
+            } else if (gamepad2.right_bumper) {
                 //up position
-                setArm(0.1, 1);
+                setArm(0.4, 0.6);
+                long ms = 1000;
+                sleep(ms);
+                setArm(0.2, 0.8);
+                sleep(ms);
+                setArm(0, 1);
             }
 
         }

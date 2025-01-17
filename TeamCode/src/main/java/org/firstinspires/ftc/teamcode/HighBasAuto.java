@@ -9,15 +9,15 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous
 public class HighBasAuto extends LinearOpMode {
-    DcMotor frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor, rightVerticalSlide, leftVerticalSlide;
+    DcMotor /*frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor,*/ rightVerticalSlide, leftVerticalSlide;
     Servo leftIntakeServo, rightIntakeServo, LeftVerticalArm, RightVerticalArm, clawServo;
 
-    public void setDrive(double frontLeftPower, double frontRightPower, double backLeftPower, double backRightPower) {
-        frontLeftMotor.setPower(frontLeftPower);
-        backLeftMotor.setPower(backLeftPower);
-        frontRightMotor.setPower(frontRightPower);
-        backRightMotor.setPower(backRightPower);
-    }
+//    public void setDrive(double frontLeftPower, double frontRightPower, double backLeftPower, double backRightPower) {
+//        frontLeftMotor.setPower(frontLeftPower);
+//        backLeftMotor.setPower(backLeftPower);
+//        frontRightMotor.setPower(frontRightPower);
+//        backRightMotor.setPower(backRightPower);
+//    }
     public void setArm(double LeftVerticalPosition, double RightVerticalPosition) {
         LeftVerticalArm.setPosition(LeftVerticalPosition);
         RightVerticalArm.setPosition(RightVerticalPosition);
@@ -54,40 +54,40 @@ public class HighBasAuto extends LinearOpMode {
         double p = 0.45;
         long ms = 1800;
 
-        //left
-        setDrive(-p, p, p, -p);
-        sleep(ms);
-
-        // forward
-        p = 0.4;
-        ms = (1200);
-        setDrive(p, p, p, p);
-        sleep(ms);
-
-        //intake sample
-
-
-        //rotation
-        p = 0.45;
-        ms = (1850);
-        setDrive(p, -p, p, -p);
-        sleep(ms);
-
-        //return
-        ms = (1400);
-        setDrive(p, p, p, p);
-        sleep(ms);
-
-        //back
-        p = 0.4;
-        ms = (1200);
-        setDrive(-p, -p, -p, -p);
-        sleep(ms);
-
-        setDrive(-p, -p, -p, -p);
-        sleep(ms);
-
-        setDrive(0, 0, 0, 0);
+//        //left
+//        setDrive(-p, p, p, -p);
+//        sleep(ms);
+//
+//        // forward
+//        p = 0.4;
+//        ms = (1200);
+//        setDrive(p, p, p, p);
+//        sleep(ms);
+//
+//        //intake sample
+//
+//
+//        //rotation
+//        p = 0.45;
+//        ms = (1850);
+//        setDrive(p, -p, p, -p);
+//        sleep(ms);
+//
+//        //return
+//        ms = (1400);
+//        setDrive(p, p, p, p);
+//        sleep(ms);
+//
+//        //back
+//        p = 0.4;
+//        ms = (1200);
+//        setDrive(-p, -p, -p, -p);
+//        sleep(ms);
+//
+//        setDrive(-p, -p, -p, -p);
+//        sleep(ms);
+//
+//        setDrive(0, 0, 0, 0);
         // vSlide limit(setting)
 //        int minPosition = 0; // Minimum position (fully retracted)
 //        int maxPosition = 1500; // Maximum position (fully extended)

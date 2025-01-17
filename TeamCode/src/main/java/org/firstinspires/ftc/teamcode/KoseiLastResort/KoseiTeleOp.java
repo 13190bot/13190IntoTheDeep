@@ -141,7 +141,7 @@ public class KoseiTeleOp extends LinearOpMode {
             if (gamepad2.cross) {
                 // go to pick up position(0)
                 //You need to set a value that add up to 1
-                setIntake(0.55,0.45);
+                setIntake(0.44,0.56);
             }
 
 
@@ -185,7 +185,7 @@ public class KoseiTeleOp extends LinearOpMode {
                 setArm(0.6, 0.4);
                 long ms = 1000;
                 sleep(ms);
-                setArm(0.73, 0.27);
+                setArm(0.82, 0.18);
                 //sleep(ms);
                 //setArm(1, 0);
 

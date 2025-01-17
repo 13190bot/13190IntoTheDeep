@@ -26,6 +26,9 @@ public class HighBasAuto extends LinearOpMode {
         leftVerticalSlide.setPower(LeftVerticalSlidePower);
         rightVerticalSlide.setPower(RightVerticalSlidePower);
     }
+    public void setClawServo(double clawPosition) {
+        clawServo.setPosition(clawPosition);
+    }
 
 
     @Override
@@ -60,6 +63,9 @@ public class HighBasAuto extends LinearOpMode {
         ms = (1200);
         setDrive(p, p, p, p);
         sleep(ms);
+
+        //intake sample
+
 
         //rotation
         p = 0.45;
@@ -107,11 +113,28 @@ public class HighBasAuto extends LinearOpMode {
 
         //vertical slide move
         p = 0.5;
-
+        ms = 1000;
         setVerticalSlide(p,p);
         sleep(ms);
 
+        //arm up
         ms = 2000;
+        setArm(0.4, 0.6);
+        ms = 1000;
         sleep(ms);
+        setArm(0.2, 0.8);
+        sleep(ms);
+        setArm(0, 1);
+
+        //Dropping sample(claw)
+        setClawServo(0.6);
+        sleep(ms);
+
+        //arm down
+        setArm(0.6, 0.4);
+        ms = 1000;
+        sleep(ms);
+        setArm(0.73, 0.27);
+
     }
 }

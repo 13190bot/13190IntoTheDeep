@@ -54,9 +54,10 @@ public class KoseiTeleOp extends LinearOpMode {
 
         // hSlide limit(setting)
         telemetry.addData("RVslideIncoder", rightVerticalSlide.getCurrentPosition());
+        telemetry.addData("hSlide", hSlide.getCurrentPosition());
 
-        int minPosition = 100; // Minimum position (fully retracted)
-        int maxPosition = 1500; // Maximum position (fully extended)
+        int minPosition = 20; // Minimum position (fully retracted)
+        int maxPosition = 100000; // Maximum position (fully extended)
         int currentPosition;
         //hSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
        // hSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -78,8 +79,9 @@ public class KoseiTeleOp extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-            double x = -gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
+
+            double x = -gamepad1.left_stick_x; // Remember, Y stick value is reversed
+            double y = -gamepad1.left_stick_y * 1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
 
             // Denominator is the largest motor power (absolute value) or 1
@@ -103,8 +105,10 @@ public class KoseiTeleOp extends LinearOpMode {
             currentPosition = hSlide.getCurrentPosition();
 
             if (currentPosition <= minPosition) {
+                telemetry.update();
                 hSlide.setPower(0);
             } else if (currentPosition >= maxPosition) {
+                telemetry.update();
                 hSlide.setPower(0);
             } else {
                 // Boolean stuff(horizontal slide)
@@ -131,25 +135,17 @@ public class KoseiTeleOp extends LinearOpMode {
 
             if (gamepad2.circle) {
                 // go to up position(1)
-                /*leftIntakeServo.setPosition(0);
-                rightIntakeServo.setPosition(1);
-
-
-                 */
-                setIntake(0,0.5);
+                //You need to set a value that add up to 1
+                setIntake(0.77,0.23);
             }
             if (gamepad2.cross) {
                 // go to pick up position(0)
-                /*leftIntakeServo.setPosition(1);L
-                rightIntakeServo.setPosition(0);
-0
-                 */
-                setIntake(0.5,0);
-                //setServo(0.55,0);
+                //You need to set a value that add up to 1
+                setIntake(0.55,0.45);
             }
 
 
-            //Movement hSlide
+            //Movement VerticalSlide
             currentPosition = rightVerticalSlide.getCurrentPosition();
 
             if (currentPosition <= minPosition) {
@@ -164,13 +160,11 @@ public class KoseiTeleOp extends LinearOpMode {
                 // vertical slide up
                 leftVerticalSlide.setPower(0.5);
                 rightVerticalSlide.setPower(-0.5);
-            }
-            else if (gamepad1.right_bumper ) {
+            } else if (gamepad1.right_bumper ) {
                 // vertical slide down
                 leftVerticalSlide.setPower(-0.5);
                 rightVerticalSlide.setPower(0.5);
-            }
-            else {
+            } else {
                 leftVerticalSlide.setPower(-0.02);
                 rightVerticalSlide.setPower(0.02);
             }
@@ -191,7 +185,7 @@ public class KoseiTeleOp extends LinearOpMode {
                 setArm(0.6, 0.4);
                 long ms = 1000;
                 sleep(ms);
-                setArm(0.89, 0.19);
+                setArm(0.73, 0.27);
                 //sleep(ms);
                 //setArm(1, 0);
 

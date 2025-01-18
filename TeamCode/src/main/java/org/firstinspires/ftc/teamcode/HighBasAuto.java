@@ -9,23 +9,24 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous
 public class HighBasAuto extends LinearOpMode {
-    DcMotor /*frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor,*/ rightVerticalSlide, leftVerticalSlide;
+//    DcMotor frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor, rightVerticalSlide, leftVerticalSlide;
     Servo leftIntakeServo, rightIntakeServo, LeftVerticalArm, RightVerticalArm, clawServo;
 
-//    public void setDrive(double frontLeftPower, double frontRightPower, double backLeftPower, double backRightPower) {
+//    public void set(double frontLeftPower, double frontRightPower, double backLeftPower, double backRightPower) {
 //        frontLeftMotor.setPower(frontLeftPower);
 //        backLeftMotor.setPower(backLeftPower);
 //        frontRightMotor.setPower(frontRightPower);
 //        backRightMotor.setPower(backRightPower);
 //    }
-    public void setArm(double LeftVerticalPosition, double RightVerticalPosition) {
+    public void setArm(double RightVerticalPosition, double LeftVerticalPosition) {
         LeftVerticalArm.setPosition(LeftVerticalPosition);
         RightVerticalArm.setPosition(RightVerticalPosition);
     }
-    public void setVerticalSlide(double RightVerticalSlidePower, double LeftVerticalSlidePower) {
-        leftVerticalSlide.setPower(LeftVerticalSlidePower);
-        rightVerticalSlide.setPower(RightVerticalSlidePower);
+    /*public void setVerticalSlide(double rightVerticalSlidePower, double leftVerticalSlidePower) {
+        leftVerticalSlide.setPower(leftVerticalSlidePower);
+        rightVerticalSlide.setPower(rightVerticalSlidePower);
     }
+     */
     public void setClawServo(double clawPosition) {
         clawServo.setPosition(clawPosition);
     }
@@ -51,90 +52,130 @@ public class HighBasAuto extends LinearOpMode {
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
-        double p = 0.45;
+        double p = 0.55;
         long ms = 1800;
 
-//        //left
-//        setDrive(-p, p, p, -p);
-//        sleep(ms);
-//
-//        // forward
-//        p = 0.4;
-//        ms = (1200);
-//        setDrive(p, p, p, p);
-//        sleep(ms);
-//
-//        //intake sample
-//
-//
-//        //rotation
-//        p = 0.45;
-//        ms = (1850);
-//        setDrive(p, -p, p, -p);
-//        sleep(ms);
-//
-//        //return
+        //left
+//        set(-p, p, p, -p);
+        frontLeftMotor.setPower(-p);
+        backLeftMotor.setPower(p);
+        frontRightMotor.setPower(p);
+        backRightMotor.setPower(-p);
+        sleep(ms);
+
+        // forward
+        p = 0.1;
+        ms = (1000);
+//        set(p, p, p, p);
+        frontLeftMotor.setPower(p);
+        backLeftMotor.setPower(p);
+        frontRightMotor.setPower(p);
+        backRightMotor.setPower(p);
+        sleep(ms);
+
+        //claw hold sample
+        ms = 1000;
+        setClawServo(0);
+        sleep(ms);
+
+        //rotation
+        p = 0.1;
+        ms = (1000);
+//        set(p, -p, p, -p);
+        //code for drive
+        frontLeftMotor.setPower(p);
+        backLeftMotor.setPower(-p);
+        frontRightMotor.setPower(p);
+        backRightMotor.setPower(-p);
+        sleep(ms);
+
+
+        //return
 //        ms = (1400);
-//        setDrive(p, p, p, p);
+//        set(p, p, p, p);
 //        sleep(ms);
-//
-//        //back
+
+        //back
 //        p = 0.4;
 //        ms = (1200);
-//        setDrive(-p, -p, -p, -p);
+//        set(-p, -p, -p, -p);
 //        sleep(ms);
 //
-//        setDrive(-p, -p, -p, -p);
+//        set(-p, -p, -p, -p);
 //        sleep(ms);
-//
-//        setDrive(0, 0, 0, 0);
-        // vSlide limit(setting)
-//        int minPosition = 0; // Minimum position (fully retracted)
-//        int maxPosition = 1500; // Maximum position (fully extended)
-//        int currentPosition;
-//        leftVerticalSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        rightVerticalSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        rightVerticalSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//
-//        //vertical Slide maximum movemnet
-//        currentPosition = rightVerticalSlide.getCurrentPosition();
-//        if (currentPosition <= minPosition) {
-//            rightVerticalSlide.setPower(0);
-//            leftVerticalSlide.setPower(0);
-//        } else if (currentPosition >= maxPosition) {
-//            rightVerticalSlide.setPower(0);
-//            leftVerticalSlide.setPower(0);
-//        }
-//        else {
-//            rightVerticalSlide.setPower(0.01);
-//            leftVerticalSlide.setPower(0.01);
-//        }
+
+//        set(0, 0, 0, 0);
+//         vSlide limit(setting)
+        int minPosition = 0; // Minimum position (fully retracted)
+        int maxPosition = 1500; // Maximum position (fully extended)
+        int currentPosition;
+        rightVerticalSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightVerticalSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        //vertical Slide maximum movemnet
+        currentPosition = rightVerticalSlide.getCurrentPosition();
+        if (currentPosition <= minPosition) {
+            rightVerticalSlide.setPower(0);
+            leftVerticalSlide.setPower(0);
+        } else if (currentPosition >= maxPosition) {
+            rightVerticalSlide.setPower(0);
+            leftVerticalSlide.setPower(0);
+        }
+        else {
+            rightVerticalSlide.setPower(0.01);
+            leftVerticalSlide.setPower(0.01);
+        }
+
+        ms = 1000;
+
+        //claaw close
+        setClawServo(0);
+        sleep(ms);
+
+        //arm up hehehehe
+        setArm(0.4, 0.6);
+        sleep(ms);
+        setArm(0.2, 0.8);
+        sleep(ms);
 
 
         //vertical slide move
-        p = 0.5;
-        ms = 1000;
-        setVerticalSlide(p,p);
+
+        p = 0.4;
+        rightVerticalSlide.setPower(p);
+        leftVerticalSlide.setPower(-p);
+        sleep(2500);
+
+        setArm(0, 1);
         sleep(ms);
 
-        //arm up
-        ms = 2000;
-        setArm(0.4, 0.6);
-        ms = 1000;
+        //claw close
+        setClawServo(0);
+        sleep(ms);
+
+        //Dropping sample(claw)
+        setClawServo(0.6);
+        sleep(2000);
+
+        rightVerticalSlide.setPower(-p);
+        leftVerticalSlide.setPower(p);
+        sleep(ms);
+
+
+        setArm(0.6, 0.4);
+        sleep(ms);
+        setArm(0.80, 0.20);
+        sleep(ms);
+
+        //arm down
+        /*setArm(0.4, 0.6);
+        ms = 3000;
         sleep(ms);
         setArm(0.2, 0.8);
         sleep(ms);
         setArm(0, 1);
 
-        //Dropping sample(claw)
-        setClawServo(0.6);
-        sleep(ms);
-
-        //arm down
-        setArm(0.6, 0.4);
-        ms = 1000;
-        sleep(ms);
-        setArm(0.73, 0.27);
+         */
 
     }
 }

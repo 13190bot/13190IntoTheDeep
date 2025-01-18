@@ -53,14 +53,21 @@ public class KoseiTeleOp extends LinearOpMode {
 
 
         // hSlide limit(setting)
-        telemetry.addData("RVslideIncoder", rightVerticalSlide.getCurrentPosition());
+        telemetry.addData("RV slide pos", rightVerticalSlide.getCurrentPosition());
+        telemetry.addData("LV slide pos", leftVerticalSlide.getCurrentPosition());
         telemetry.addData("hSlide", hSlide.getCurrentPosition());
 
         int minPosition = 20; // Minimum position (fully retracted)
         int maxPosition = 100000; // Maximum position (fully extended)
         int currentPosition;
-        //hSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-       // hSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        hSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        leftVerticalSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftVerticalSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        rightVerticalSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightVerticalSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         telemetry.update();
 
@@ -101,19 +108,37 @@ public class KoseiTeleOp extends LinearOpMode {
 
 
 
-            //Movement hSlide
-            currentPosition = hSlide.getCurrentPosition();
+            //telemetry
+            int HslidecurrentPosition = hSlide.getCurrentPosition();
+            telemetry.addData("HSlide pos", HslidecurrentPosition);
 
-            if (currentPosition <= minPosition) {
-                telemetry.update();
-                hSlide.setPower(0);
-            } else if (currentPosition >= maxPosition) {
-                telemetry.update();
-                hSlide.setPower(0);
+            int lvSlideCurrentPostion = leftVerticalSlide.getCurrentPosition();
+            telemetry.addData("LV slide pos", lvSlideCurrentPostion);
+
+            int rvSlideCurrentPosition = rightVerticalSlide.getCurrentPosition();
+            telemetry.addData("RV slide pos", rvSlideCurrentPosition);
+
+            telemetry.update();
+
+            //Movement hSlide
+//            if (HslidecurrentPosition <= maxPosition) {
+//                telemetry.update();
+//                hSlide.setPower(0);
+//            } else if (HslidecurrentPosition >= minPosition) {
+//                telemetry.update();
+//                hSlide.setPower(0);
+//            } else {
+//                // Boolean stuff(horizontal slide)
+//                hSlide.setPower(-gamepad2.right_stick_y / 2.0);
+//            }
+
+// Movement for hSlide
+            if (Math.abs(gamepad2.right_stick_y) > 0.1) {  // Add deadzone to avoid jittering
+                hSlide.setPower(-gamepad2.right_stick_y / 2.0);  // Adjust the divisor if needed
             } else {
-                // Boolean stuff(horizontal slide)
-                hSlide.setPower(-gamepad2.right_stick_y / 2.0);
+                hSlide.setPower(0);  // Stop when there's no input
             }
+
 //            if (gamepad1.circle) {
 //                hSlide.setPower(0.5);
 //            } else if (gamepad1.cross) {
@@ -176,6 +201,7 @@ public class KoseiTeleOp extends LinearOpMode {
                 clawServo(0.6);
             }
             else if (gamepad2.right_stick_button) {
+
                 //claw close
                 clawServo(0);
             }
@@ -185,7 +211,7 @@ public class KoseiTeleOp extends LinearOpMode {
                 setArm(0.6, 0.4);
                 long ms = 1000;
                 sleep(ms);
-                setArm(0.82, 0.18);
+                setArm(0.83, 0.17);
                 //sleep(ms);
                 //setArm(1, 0);
 

@@ -61,13 +61,15 @@ public class KoseiTeleOp extends LinearOpMode {
         int maxPosition = 100000; // Maximum position (fully extended)
         int currentPosition;
         hSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        hSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        hSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         leftVerticalSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftVerticalSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftVerticalSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftVerticalSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         rightVerticalSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightVerticalSlide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightVerticalSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightVerticalSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         telemetry.update();
 
@@ -190,8 +192,8 @@ public class KoseiTeleOp extends LinearOpMode {
                 leftVerticalSlide.setPower(-0.5);
                 rightVerticalSlide.setPower(0.5);
             } else {
-                leftVerticalSlide.setPower(-0.02);
-                rightVerticalSlide.setPower(0.02);
+                leftVerticalSlide.setPower(0);
+                rightVerticalSlide.setPower(0);
             }
 
 

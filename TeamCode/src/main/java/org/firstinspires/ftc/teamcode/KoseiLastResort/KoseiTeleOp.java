@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.KoseiLastResort;
 
+import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -18,13 +22,18 @@ public class KoseiTeleOp extends LinearOpMode {
         leftIntakeServo.setPosition(positionL);
         rightIntakeServo.setPosition(positionR);
     }
+    public void setIntake(double positionIntake) {
+        setIntake(positionIntake - 1);
+    }
     public void clawServo(double positionVS) {
         clawServo.setPosition(positionVS);
     }
     public void setArm (double RarmPosition, double LarmPosition) {
-        LeftVerticalArm.setPosition(LarmPosition);
         RightVerticalArm.setPosition(RarmPosition);
-
+        LeftVerticalArm.setPosition(LarmPosition);
+    }
+    public void setArm(double pos) {
+        setArm(pos, 1 - pos);
     }
 //    /*public void setV (double positionV) {
 //        leftVerticalSlide.setPower(positionV);
@@ -88,6 +97,7 @@ public class KoseiTeleOp extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
+            CommandScheduler.getInstance().run();
 
             double x = -gamepad1.left_stick_x; // Remember, Y stick value is reversed
             double y = -gamepad1.left_stick_y * 1.1; // Counteract imperfect strafing
@@ -163,12 +173,12 @@ public class KoseiTeleOp extends LinearOpMode {
             if (gamepad2.circle) {
                 // go to up position(1)
                 //You need to set a value that add up to 1
-                setIntake(0.77,0.23);
+                setIntake(0.77);
             }
             if (gamepad2.cross) {
                 // go to pick up position(0)
                 //You need to set a value that add up to 1
-                setIntake(0.44,0.56);
+                setIntake(0.44);
             }
 
 
@@ -210,21 +220,35 @@ public class KoseiTeleOp extends LinearOpMode {
 
             if(gamepad2.left_bumper) {
                 //down position (changed to specimen)
-                setArm(0.6, 0.4);
-                long ms = 1000;
-                sleep(ms);
-                setArm(0.83, 0.17);
+                new SequentialCommandGroup(
+                        new InstantCommand(() -> {
+                            setArm(0.6);
+                        }),
+                        new WaitCommand(1000),
+                        new InstantCommand(() -> {
+                            setArm(0.83);
+                        })
+                ).schedule();
+
                 //sleep(ms);
                 //setArm(1, 0);
 
             } else if (gamepad2.right_bumper) {
                 //up position
-                setArm(0.4, 0.6);
-                long ms = 1000;
-                sleep(ms);
-                setArm(0.2, 0.8);
-                sleep(ms);
-                setArm(0, 1);
+                new SequentialCommandGroup(
+                        new InstantCommand(() -> {
+                            setArm(0.4);
+                        }),
+                        new WaitCommand(1000),
+                        new InstantCommand(() -> {
+                            setArm(0.2);
+                        }),
+                        new WaitCommand(1000),
+                        new InstantCommand(() -> {
+                            setArm(0);
+                        })
+                ).schedule();
+
             }
 
         }

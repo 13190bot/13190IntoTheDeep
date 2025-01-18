@@ -177,8 +177,8 @@ public class HighBasAuto extends LinearOpMode {
         sleep(ms);
 
         //starting position intake
-        leftIntakeServo.setPosition(0.77);
-        rightIntakeServo.setPosition(0.33);
+        leftIntakeServo.setPosition(0.72);
+        rightIntakeServo.setPosition(0.28);
         sleep(ms);
 
         p = 0.4;

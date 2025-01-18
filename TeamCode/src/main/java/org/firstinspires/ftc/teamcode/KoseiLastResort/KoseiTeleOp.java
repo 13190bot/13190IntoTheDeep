@@ -100,8 +100,6 @@ public class KoseiTeleOp extends LinearOpMode {
             CommandScheduler.getInstance().run();
 
 
-
-
             double x = -gamepad1.left_stick_x; // Remember, Y stick value is reversed
             double y = -gamepad1.left_stick_y * 1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
@@ -164,24 +162,36 @@ public class KoseiTeleOp extends LinearOpMode {
 
             // intake code
             if (gamepad2.triangle) {
-                intakeServo.setPower(1);
+                new SequentialCommandGroup(
+                        new InstantCommand(() -> {
+                            intakeServo.setPower(1);
+                        })
+                ).schedule();
             } else if (gamepad2.square) {
-                intakeServo.setPower(-1);
+                new SequentialCommandGroup(
+                        new InstantCommand(() -> {
+                            intakeServo.setPower(-1);
+                        })
+                ).schedule();
             } else {
-                intakeServo.setPower(0);
+                new SequentialCommandGroup(
+                        new InstantCommand(() -> {
+                            intakeServo.setPower(0);
+                        })
+                ).schedule();
             }
 
 
 
             if (gamepad2.circle) {
-                // go to up position(1)
+                // go to up position(0)
                 //You need to set a value that add up to 1
-                setIntake(0.77);
+                setIntake(0.726);
             }
             if (gamepad2.cross) {
-                // go to pick up position(0)
+                // go to pick up position(1)
                 //You need to set a value that add up to 1
-                setIntake(0.44);
+                setIntake(0.41);
             }
 
 

@@ -55,8 +55,15 @@ public class HighBasAuto extends LinearOpMode {
         double p = 0.55;
         long ms = 1800;
 
+        //claw hold sample
+        ms = 1000;
+        setClawServo(0.8);
+        sleep(ms);
+
         //left
 //        set(-p, p, p, -p);
+        p = 0.55;
+        ms = 1800;
         frontLeftMotor.setPower(-p);
         backLeftMotor.setPower(p);
         frontRightMotor.setPower(p);
@@ -75,19 +82,30 @@ public class HighBasAuto extends LinearOpMode {
 
         //claw hold sample
         ms = 1000;
-        setClawServo(0);
+        setClawServo(0.8);
         sleep(ms);
 
         //rotation
-        p = 0.1;
+        p = 0.32;
         ms = (1000);
 //        set(p, -p, p, -p);
         //code for drive
         frontLeftMotor.setPower(p);
-        backLeftMotor.setPower(-p);
-        frontRightMotor.setPower(p);
+        backLeftMotor.setPower(p);
+        frontRightMotor.setPower(-p);
         backRightMotor.setPower(-p);
         sleep(ms);
+
+        //backward
+        p = 0.075;
+        ms = (1000);
+
+        frontLeftMotor.setPower(-p);
+        backLeftMotor.setPower(-p);
+        frontRightMotor.setPower(-p);
+        backRightMotor.setPower(-p);
+        sleep(ms);
+
 
 
         //return
@@ -120,8 +138,7 @@ public class HighBasAuto extends LinearOpMode {
         } else if (currentPosition >= maxPosition) {
             rightVerticalSlide.setPower(0);
             leftVerticalSlide.setPower(0);
-        }
-        else {
+        } else {
             rightVerticalSlide.setPower(0.01);
             leftVerticalSlide.setPower(0.01);
         }
@@ -129,13 +146,7 @@ public class HighBasAuto extends LinearOpMode {
         ms = 1000;
 
         //claaw close
-        setClawServo(0);
-        sleep(ms);
-
-        //arm up hehehehe
-        setArm(0.4, 0.6);
-        sleep(ms);
-        setArm(0.2, 0.8);
+        setClawServo(0.8);
         sleep(ms);
 
 
@@ -146,26 +157,35 @@ public class HighBasAuto extends LinearOpMode {
         leftVerticalSlide.setPower(-p);
         sleep(2500);
 
-        setArm(0, 1);
+        //arm up hehehehe
+        ms = 1000;
+        setArm(0.4, 0.6);
+        sleep(ms);
+        setArm(0.2, 0.8);
+        sleep(ms);
+        setArm(0,1);
         sleep(ms);
 
-        //claw close
-        setClawServo(0);
-        sleep(ms);
 
         //Dropping sample(claw)
-        setClawServo(0.6);
-        sleep(2000);
-
-        rightVerticalSlide.setPower(-p);
-        leftVerticalSlide.setPower(p);
+        setClawServo(0);
         sleep(ms);
-
 
         setArm(0.6, 0.4);
         sleep(ms);
         setArm(0.80, 0.20);
         sleep(ms);
+
+        //starting position intake
+        leftIntakeServo.setPosition(0.77);
+        rightIntakeServo.setPosition(0.33);
+        sleep(ms);
+
+        p = 0.4;
+        rightVerticalSlide.setPower(-p);
+        leftVerticalSlide.setPower(p);
+        sleep(ms);
+
 
         //arm down
         /*setArm(0.4, 0.6);

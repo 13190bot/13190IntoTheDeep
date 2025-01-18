@@ -23,7 +23,7 @@ public class KoseiTeleOp extends LinearOpMode {
         rightIntakeServo.setPosition(positionR);
     }
     public void setIntake(double positionIntake) {
-        setIntake(positionIntake - 1);
+        setIntake(positionIntake, 1 - positionIntake);
     }
     public void clawServo(double positionVS) {
         clawServo.setPosition(positionVS);
@@ -98,6 +98,9 @@ public class KoseiTeleOp extends LinearOpMode {
 
         while (opModeIsActive()) {
             CommandScheduler.getInstance().run();
+
+
+
 
             double x = -gamepad1.left_stick_x; // Remember, Y stick value is reversed
             double y = -gamepad1.left_stick_y * 1.1; // Counteract imperfect strafing
@@ -209,12 +212,12 @@ public class KoseiTeleOp extends LinearOpMode {
 
             //claw
             if (gamepad2.left_stick_button) {
-                //claw Open
+                //claw close
                 clawServo(0.6);
             }
             else if (gamepad2.right_stick_button) {
 
-                //claw close
+                //claw open
                 clawServo(0);
             }
 
@@ -226,7 +229,7 @@ public class KoseiTeleOp extends LinearOpMode {
                         }),
                         new WaitCommand(1000),
                         new InstantCommand(() -> {
-                            setArm(0.83);
+                            setArm(0.77);
                         })
                 ).schedule();
 

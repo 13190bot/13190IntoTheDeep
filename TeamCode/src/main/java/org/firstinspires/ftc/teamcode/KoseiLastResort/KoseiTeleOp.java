@@ -100,8 +100,8 @@ public class KoseiTeleOp extends LinearOpMode {
             CommandScheduler.getInstance().run();
 
 
-            double x = -gamepad1.left_stick_x; // Remember, Y stick value is reversed
-            double y = -gamepad1.left_stick_y * 1.1; // Counteract imperfect strafing
+            double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
+            double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
 
             // Denominator is the largest motor power (absolute value) or 1
@@ -149,7 +149,7 @@ public class KoseiTeleOp extends LinearOpMode {
             if (Math.abs(gamepad2.right_stick_y) > 0.1) {  // Add deadzone to avoid jittering
                 hSlide.setPower(-gamepad2.right_stick_y / 2.0);  // Adjust the divisor if needed
             } else {
-                hSlide.setPower(0);  // Stop when there's no input
+                hSlide.setPower(0);  // Stop when there's no input=-[= h
             }
 
 //            if (gamepad1.circle) {
@@ -186,12 +186,14 @@ public class KoseiTeleOp extends LinearOpMode {
             if (gamepad2.circle) {
                 // go to up position(0)
                 //You need to set a value that add up to 1
-                setIntake(0.726);
+                // when value goes down intake will move up
+                setIntake(0.716);
             }
             if (gamepad2.cross) {
                 // go to pick up position(1)
                 //You need to set a value that add up to 1
-                setIntake(0.41);
+                // when value goes down intake will move up
+                setIntake(0.37);
             }
 
 
@@ -207,13 +209,13 @@ public class KoseiTeleOp extends LinearOpMode {
             }
 
             if (gamepad1.left_bumper) {
-                // vertical slide up
+                // vertical slide down
                 leftVerticalSlide.setPower(0.5);
                 rightVerticalSlide.setPower(-0.5);
             } else if (gamepad1.right_bumper ) {
-                // vertical slide down
-                leftVerticalSlide.setPower(-0.5);
-                rightVerticalSlide.setPower(0.5);
+                // vertical slide up
+                leftVerticalSlide.setPower(-1);
+                rightVerticalSlide.setPower(1);
             } else {
                 leftVerticalSlide.setPower(0);
                 rightVerticalSlide.setPower(0);
@@ -235,12 +237,15 @@ public class KoseiTeleOp extends LinearOpMode {
                 //down position (changed to specimen)
                 new SequentialCommandGroup(
                         new InstantCommand(() -> {
-                            setArm(0.6);
-                        }),
-                        new WaitCommand(1000),
-                        new InstantCommand(() -> {
-                            setArm(0.77);
+                            setArm(0.75);
                         })
+//                        new InstantCommand(() -> {
+//                            setArm(0.58);
+//                        }),
+//                        new WaitCommand(1000),
+//                        new InstantCommand(() -> {
+//                            setArm(0.89);
+//                        })
                 ).schedule();
 
                 //sleep(ms);

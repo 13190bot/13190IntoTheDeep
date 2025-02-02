@@ -6,10 +6,7 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.*;
 
 @TeleOp
 public class KoseiTeleOp extends LinearOpMode {
@@ -46,14 +43,14 @@ public class KoseiTeleOp extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeft");
-        DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeft");
-        DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRight");
-        DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
-        DcMotor hSlide = hardwareMap.dcMotor.get("hSlide");
+        DcMotorEx frontLeftMotor = (DcMotorEx) hardwareMap.dcMotor.get("frontLeft");
+        DcMotorEx backLeftMotor = (DcMotorEx) hardwareMap.dcMotor.get("backLeft");
+        DcMotorEx frontRightMotor = (DcMotorEx) hardwareMap.dcMotor.get("frontRight");
+        DcMotorEx backRightMotor = (DcMotorEx) hardwareMap.dcMotor.get("backRight");
+        DcMotorEx hSlide = (DcMotorEx) hardwareMap.dcMotor.get("hSlide");
         CRServo intakeServo = hardwareMap.get(CRServo.class, "intake");
-        DcMotor leftVerticalSlide = hardwareMap.dcMotor.get("LVslide");
-        DcMotor rightVerticalSlide = hardwareMap.dcMotor.get("RVslide");
+        DcMotorEx leftVerticalSlide = (DcMotorEx) hardwareMap.dcMotor.get("LVslide");
+        DcMotorEx rightVerticalSlide = (DcMotorEx) hardwareMap.dcMotor.get("RVslide");
         leftIntakeServo = hardwareMap.get(Servo.class, "leftIntakeServo");
         rightIntakeServo = hardwareMap.get(Servo.class,"rightIntakeServo");
         clawServo = hardwareMap.get(Servo.class,"claw");
@@ -187,13 +184,13 @@ public class KoseiTeleOp extends LinearOpMode {
                 // go to up position(0)
                 //You need to set a value that add up to 1
                 // when value goes down intake will move up
-                setIntake(0.716);
+                setIntake(0.9);
             }
             if (gamepad2.cross) {
                 // go to pick up position(1)
                 //You need to set a value that add up to 1
                 // when value goes down intake will move up
-                setIntake(0.37);
+                setIntake(0.5);
             }
 
 

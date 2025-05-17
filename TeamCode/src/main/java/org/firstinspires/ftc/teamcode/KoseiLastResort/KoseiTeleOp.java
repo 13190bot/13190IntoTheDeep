@@ -97,9 +97,9 @@ public class KoseiTeleOp extends LinearOpMode {
             CommandScheduler.getInstance().run();
 
 
-            double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-            double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
-            double rx = gamepad1.right_stick_x;
+            double y = gamepad1.left_stick_y; // Remember, Y stick value is reversed
+            double x = -gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
+            double rx = -gamepad1.right_stick_x;
 
             // Denominator is the largest motor power (absolute value) or 1
             // This ensures all the powers maintain the same ratio,
@@ -184,13 +184,13 @@ public class KoseiTeleOp extends LinearOpMode {
                 // go to up position(0)
                 //You need to set a value that add up to 1
                 // when value goes down intake will move up
-                setIntake(0.915);
+                setIntake(0.9);
             }
             if (gamepad2.cross) {
                 // go to pick up position(1)
                 //You need to set a value that add up to 1
                 // when value goes down intake will move up
-                setIntake(0.6);
+                setIntake(0.67);
             }
 
 
@@ -234,11 +234,11 @@ public class KoseiTeleOp extends LinearOpMode {
                 //down position (changed to specimen)
                 new SequentialCommandGroup(
                         new InstantCommand(() -> {
-                            setArm(0.79);
+                            setArm(0.7);
+                        }),
+                        new InstantCommand(() -> {
+                            setArm(0.875);
                         })
-//                        new InstantCommand(() -> {
-//                            setArm(0.58);
-//                        }),
 //                        new WaitCommand(1000),
 //                        new InstantCommand(() -> {
 //                            setArm(0.89);

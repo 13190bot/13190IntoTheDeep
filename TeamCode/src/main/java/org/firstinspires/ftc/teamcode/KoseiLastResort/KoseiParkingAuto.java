@@ -33,8 +33,8 @@ public class KoseiParkingAuto extends LinearOpMode {
 
         waitForStart();
 
-        double p = 0.5;
-        long ms = 1700;
+        double p = 1;
+        long ms = 15000;
 
         set(p, -p, -p, p);
         sleep(ms);

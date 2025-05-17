@@ -184,13 +184,13 @@ public class KoseiTeleOp extends LinearOpMode {
                 // go to up position(0)
                 //You need to set a value that add up to 1
                 // when value goes down intake will move up
-                setIntake(0.9);
+                setIntake(0.915);
             }
             if (gamepad2.cross) {
                 // go to pick up position(1)
                 //You need to set a value that add up to 1
                 // when value goes down intake will move up
-                setIntake(0.5);
+                setIntake(0.6);
             }
 
 
@@ -234,7 +234,7 @@ public class KoseiTeleOp extends LinearOpMode {
                 //down position (changed to specimen)
                 new SequentialCommandGroup(
                         new InstantCommand(() -> {
-                            setArm(0.75);
+                            setArm(0.79);
                         })
 //                        new InstantCommand(() -> {
 //                            setArm(0.58);
@@ -252,16 +252,16 @@ public class KoseiTeleOp extends LinearOpMode {
                 //up position
                 new SequentialCommandGroup(
                         new InstantCommand(() -> {
-                            setArm(0.4);
+                            setArm(0.5);
                         }),
                         new WaitCommand(1000),
                         new InstantCommand(() -> {
-                            setArm(0.2);
-                        }),
-                        new WaitCommand(1000),
-                        new InstantCommand(() -> {
-                            setArm(0);
+                            setArm(0.35);
                         })
+//                        new WaitCommand(1000),
+//                        new InstantCommand(() -> {
+//                            setArm(0.;
+//                        })
                 ).schedule();
 
             }
